@@ -1,0 +1,38 @@
+version: '3'
+services:
+  books-frontend:
+    image: azimiali/books-frontend:latest
+    restart: always
+    environment:
+      - DATABASE_URI=${DATABASE_URI}
+
+  api-book-get:
+    image: azimiali/api-book-delete:latest
+    restart: always
+    environment:
+      - DATABASE_URI=${DATABASE_URI}
+
+  api-book-post:
+    image: azimiali/api-book-post:latest
+    restart: always
+    environment:
+      - DATABASE_URI=${DATABASE_URI}
+
+  api-book-put:
+    image: azimiali/api-book-put:latest
+    restart: always
+    environment:
+      - DATABASE_URI=${DATABASE_URI}
+
+  api-book-delete:
+    image: azimiali/api-book-delete:latest
+    restart: always
+    environment:
+      - DATABASE_URI=${DATABASE_URI}
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "9999:9999"
