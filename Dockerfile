@@ -12,7 +12,7 @@ RUN go mod tidy
 
 RUN go build -o main ./cmd/main.go
 
-EXPOSE 8080
+EXPOSE 3030
 
 CMD ["/app/main"]
 
