@@ -1,8 +1,7 @@
 version: '3.4'
-
 services:
-
   nginx:
+    container_name: nginx
     build:
       context : ./nginx/
     depends_on:
@@ -17,31 +16,73 @@ services:
       - DATABASE_URI=${DATABASE_URI}
 
   frontend:
+    container_name: frontend
     build: 
       context: .
     environment:
       - DATABASE_URI=${DATABASE_URI}
+    depends_on:
+      - mongo
+    networks:
+      - mongodb-network
 
   server-get:
+    container_name: server-get
     build: 
        context: .
     environment:
       - DATABASE_URI=${DATABASE_URI}
+    depends_on:
+      - mongo
+    networks:
+      - mongodb-network
 
   server-post:
+    container_name: server-post
     build: 
       context: .
     environment:
       - DATABASE_URI=${DATABASE_URI}
+    depends_on:
+      - mongo
+    networks:
+      - mongodb-network
 
   server-put:
+    container_name: server-put
     build: 
        context: .
     environment:
       - DATABASE_URI=${DATABASE_URI}
+    depends_on:
+      - mongo
+    networks:
+      - mongodb-network
     
   server-delete:
+    container_name: server-delete
     build: 
        context: .
     environment:
       - DATABASE_URI=${DATABASE_URI}
+    depends_on:
+      - mongo
+    networks:
+      - mongodb-network
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - mongodb-network
+
+
+networks:
+  mongodb-network:
+    driver: bridge

@@ -205,12 +205,14 @@ func main() {
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
 	if err != nil {
 		fmt.Printf("failed to create client for MongoDB\n")
+		fmt.Printf(uri + "\n")
 		os.Exit(1)
 	}
 
 	err = client.Ping(ctx, readpref.Primary())
 	if err != nil {
 		fmt.Printf("failed to connect to MongoDB, please make sure the database is running\n")
+		fmt.Printf(uri + "\n")
 		os.Exit(1)
 	}
 
